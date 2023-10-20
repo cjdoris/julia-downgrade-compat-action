@@ -1,0 +1,12 @@
+name: 'Julia downgrade compat entries'
+description: 'Restrict the compat entries in Project.toml so that only the oldest versions are installed.'
+inputs:
+  skip-packages:
+    description: 'Array of packages to skip when downgrading.'
+    required: false
+    default: []
+runs:
+  using: "composite"
+  steps:
+    - run: julia downgrade.jl "${{ join(inputs.skip-packages) }}"
+      shell: bash
