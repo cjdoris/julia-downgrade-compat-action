@@ -1,0 +1,12 @@
+name = "TestPackage"
+
+[compat]
+julia = "1.6"
+Pkg1 = "1"
+Pkg2 = "1.2"
+Pkg3 = "1.2.3"
+Pkg4 = "0"
+Pkg5 = "0.2"
+Pkg6 = "0.2.3"
+Pkg7 = "0.0.3"
+Pkg8 = "0.0.0"
