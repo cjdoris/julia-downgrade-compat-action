@@ -37,16 +37,16 @@ bounds are too low.
 ```yaml
 - uses: cjdoris/julia-downgrade-compat-action@v1
   with:
-    # Comma-separated list of packages to not downgrade. This should include any standard
-    # libraries because these have versions tied to the Julia version.
+    # Comma-separated list of packages to not downgrade. This should include any
+    # standard libraries because these have versions tied to the Julia version.
     # Example: Pkg, TOML
     # Default: ''
     skip: ''
 
-    # When strict, a compat entry like "1.2.3" becomes "=1.2.3" so that exactly v1.2.3 is
-    # installed. When not strict, it becomes "~1.2.3" so that patch upgrades are allowed
-    # (v1.2.*). This entry can be 'true' (strict), 'false' (not strict) or 'v0' (strict for
-    # "0.*.*" and not strict otherwise).
+    # When strict, a compat entry like "1.2.3" becomes "=1.2.3" so that exactly
+    # v1.2.3 is installed. When not strict, it becomes "~1.2.3" so that patch
+    # upgrades are allowed (v1.2.*). This entry can be 'true' (strict), 'false'
+    # (not strict) or 'v0' (strict for "0.*.*" and not strict otherwise).
     # Default: 'v0'
     strict: ''
 ```
@@ -76,9 +76,9 @@ jobs:
 The action requires Julia to be installed, so must occur after `setup-julia`. It runs just
 before `julia-buildpkg` so that the Project.toml is modified before installing any packages.
 
-In this example, we are running the test suite with the latest version of Julia and
+In this example, we are running the test suite with the latest version of Julia 1.* and
 also Julia 1.6, corresponding to `matrix.version`. The `if:` entry only runs the downgrade
-action when it is Julia 1.6 running. This means we get one run using latest Julia and
+action when it is Julia 1.6 running. This means we get one run using latest Julia 1.* and
 latest packages, and one run using Julia 1.6 and old packages.
 
 The `skip:` input says that we should not attempt to downgrade `Pkg` or `TOML`.
