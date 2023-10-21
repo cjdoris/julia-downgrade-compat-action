@@ -6,7 +6,7 @@ inputs:
     default: ''
   strict:
     description: 'true, false or v0. Default: v0.'
-    default: 'false'
+    default: 'v0'
 runs:
   using: "composite"
   steps:
