@@ -28,7 +28,7 @@ Baz = "~1.0.0"
 Run this action after installing Julia (e.g. with `setup-julia`) and before installing Julia
 dependencies (e.g. with `julia-buildpkg`).
 
-For example:
+For example, here is the action being used as part of a standard Julia test workflow:
 ```yaml
 jobs:
   test:
