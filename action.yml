@@ -1,5 +1,5 @@
-name: 'Julia downgrade compat entries'
-description: 'Restrict the compat entries in Project.toml so that only the oldest versions are installed.'
+name: 'Downgrade Julia compat entries'
+description: 'Restricts the compat entries in Project.toml so that only the oldest versions are installed.'
 inputs:
   skip:
     description: 'Comma-separated list of packages to not downgrade.'
@@ -12,3 +12,6 @@ runs:
   steps:
     - run: julia "${{ github.action_path }}/downgrade.jl" "${{ inputs.skip }}" "${{ inputs.strict }}"
       shell: bash
+branding:
+  icon: trending-down
+  color: purple
