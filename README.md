@@ -2,6 +2,8 @@
 
 **Easy-peasy checking of compat lower bounds in your Julia package.**
 
+Did you set your compat entries a long time ago? Are you sure they are still accurate?
+
 This GitHub action does one simple thing: it modifies Project.toml so that that oldest
 compatible versions of dependencies get installed, instead of the newest. When used as part
 of a testing workflow, this can check that your compat lower bounds are correct.
@@ -16,8 +18,8 @@ Bar = "0.1.2"
 
 Often these compat entries get forgotten about once set. For instance, suppose the latest
 version of Foo is v1.4.0, and your package now relies on some feature of Foo v1.4 that is
-not present in Foo v1.2. Your package tests will still succeed, because by default we use
-the latest versions of all dependencies.
+not present in Foo v1.2. Your package tests will still succeed, because by default they run
+with the latest versions of all dependencies, including Foo v1.4.
 
 This action will modify the compat to:
 ```toml
@@ -27,8 +29,8 @@ Foo = "~1.2.3"
 Bar = "=0.1.2"
 ```
 
-Now your package tests will run against Foo v1.2 and fail, highlighting that the compat
-lower bounds are too low - and Foo needs to be increased to `1.4.0`.
+Now your package tests will run against Foo v1.2 and fail, indicating that the compat lower
+bounds are too low.
 
 ## Usage
 
