@@ -25,8 +25,24 @@ Baz = "~1.0.0"
 
 ## Usage
 
-Run this action after installing Julia (e.g. with `setup-julia`) and before installing Julia
-dependencies (e.g. with `julia-buildpkg`).
+```yaml
+- uses: cjdoris/julia-downgrade-compat-action@v1
+  with:
+    # Comma-separated list of packages to not downgrade. This should include any standard
+    # libraries because these have versions tied to the Julia version.
+    # Example: Pkg, TOML
+    # Default: ''
+    skip: ''
+
+    # When strict, a compat entry like "1.2.3" becomes "=1.2.3" so that exactly v1.2.3 is
+    # installed. When not strict, it becomes "~1.2.3" so that patch upgrades are allowed
+    # (v1.2.*). This entry can be 'true' (strict), 'false' (not strict) or 'v0' (strict for
+    # "0.*.*" and not strict otherwise).
+    # Default: 'v0'
+    strict: ''
+```
+
+## Example
 
 For example, here is the action being used as part of a standard Julia test workflow:
 ```yaml
@@ -48,22 +64,15 @@ jobs:
       - uses: julia-actions/julia-runtest@v1
 ```
 
+The action requires Julia to be installed, so must occur after `setup-julia`. It runs just
+before `julia-buildpkg` so that the Project.toml is modified before installing any packages.
+
 In this example, we are running the test suite with the latest version of Julia and
 also Julia 1.6, corresponding to `matrix.version`. The `if:` entry only runs the downgrade
 action when it is Julia 1.6 running. This means we get one run using latest Julia and
 latest packages, and one run using Julia 1.6 and old packages.
 
 The `skip:` input says that we should not attempt to downgrade `Pkg` or `TOML`.
-
-## Inputs
-
-- `skip` is a comma-separated list of packages to prevent from being downgraded. It should
-  include any standard libraries, because these are tied to the Julia version.
-
-- `strict` can be `true`, `false` or `v0` (default is `v0`):
-  - `true`: a compat like `1.2.3` becomes `=1.2.3` so that exactly only v1.2.3 is installed.
-  - `false`: then it becomes `~1.2.3`, allowing a patch upgrade (v1.2.*).
-  - `v0`: is strict only for v0.*.*, so `1.2.3` becomes `~1.2.3` but `0.1.2` becomes `=0.1.2`.
 
 ## Supported compat entries
 
