@@ -1,4 +1,4 @@
-function downgrade(file, ignore_pkgs)
+function downgrade(file, ignore_pkgs, strict)
     lines = readlines(file)
     compat = false
     for (i, line) in pairs(lines)
@@ -6,7 +6,9 @@ function downgrade(file, ignore_pkgs)
             compat = true
         elseif startswith(line, "[")
             compat = false
-        elseif compat && !isempty(line)
+        elseif startswith(strip(line), "#") || isempty(strip(line))
+            continue
+        elseif compat
             # parse the compat line
             m = match(r"^([A-Za-z0-9]+)( *= *\")([^\"]*)(\".*)", line)
             if m === nothing
@@ -33,10 +35,14 @@ function downgrade(file, ignore_pkgs)
                 println("skipping $pkg: $ver")
                 continue
             end
+            # parse the version
+            ver2 = VersionNumber(ver2)
             # select a new operator
-            if op in "^~" && occursin(r"^0\.[0-9]+\.[0-9]+$", ver2)
+            if strict == "true"
                 op = '='
-            elseif op in "^"
+            elseif strict == "v0" && ver2.major == 0
+                op = '='
+            elseif op == '^'
                 op = '~'
             end
             # output the new compat entry
@@ -57,10 +63,13 @@ function downgrade(file, ignore_pkgs)
 end
 
 ignore_pkgs = map(strip, split(ARGS[1], ","))
+strict = ARGS[2]
+
+strict in ["true", "false", "v0"] || error("strict must be true, false or v0")
 
 project_files = filter(isfile, ["Project.toml", "JuliaProject.toml"])
 isempty(project_files) && error("could not find Project.toml")
 
 for file in project_files
-    downgrade(file, ignore_pkgs)
+    downgrade(file, ignore_pkgs, strict)
 end
