@@ -10,5 +10,5 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: julia downgrade.jl "${{ inputs.skip }}" "${{ inputs.strict }}"
+    - run: julia "${{ github.action_path }}/downgrade.jl" "${{ inputs.skip }}" "${{ inputs.strict }}"
       shell: bash
