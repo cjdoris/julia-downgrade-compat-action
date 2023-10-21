@@ -1,8 +1,9 @@
 name = "TestPackage"
 
 [compat]
-# julia should be ignored
+# these should be ignored
 julia = "1.6"
+Pkg0 = "1.2"
 # some compats
 Pkg1 = "1"
 Pkg2 = "1.2"
