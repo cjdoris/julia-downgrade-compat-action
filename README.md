@@ -43,7 +43,7 @@ jobs:
       - uses: cjdoris/julia-downgrade-compat-action@v1
         if: ${{ matrix.version == '1.6' }}
         with:
-          skip: [Pkg, TOML]
+          skip: Pkg,TOML
       - uses: julia-actions/julia-buildpkg@v1
       - uses: julia-actions/julia-runtest@v1
 ```
@@ -57,8 +57,8 @@ The `skip:` input says that we should not attempt to downgrade `Pkg` or `TOML`.
 
 ## Inputs
 
-- `skip` is a list of packages to prevent from being downgraded. It should include any
-  standard libraries, because these are tied to the Julia version.
+- `skip` is a comma-separated list of packages to prevent from being downgraded. It should
+  include any standard libraries, because these are tied to the Julia version.
 
 - `strict` can be `true`, `false` or `v0` (default is `v0`):
   - `true`: a compat like `1.2.3` becomes `=1.2.3` so that exactly only v1.2.3 is installed.

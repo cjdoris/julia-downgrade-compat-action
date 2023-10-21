@@ -62,7 +62,7 @@ function downgrade(file, ignore_pkgs, strict)
     end
 end
 
-ignore_pkgs = map(strip, split(ARGS[1], ","))
+ignore_pkgs = map(strip, split(ARGS[1], ",", keepempty=false))
 strict = ARGS[2]
 
 strict in ["true", "false", "v0"] || error("strict must be true, false or v0")
