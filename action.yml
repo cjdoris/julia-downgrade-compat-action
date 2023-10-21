@@ -2,13 +2,11 @@ name: 'Julia downgrade compat entries'
 description: 'Restrict the compat entries in Project.toml so that only the oldest versions are installed.'
 inputs:
   skip:
-    description: 'Array of packages to skip when downgrading. Default: [].'
-    required: false
-    default: []
+    description: 'Comma-separated list of packages to not downgrade.'
+    default: ''
   strict:
-    description: 'Can be true, false or v0. If true then "1.2.3" becomes "=1.2.3". If false then it becomes "~1.2.3". If v0 then it is strict only on "0.*.*". Default: v0.'
-    required: false
-    default: false
+    description: 'true, false or v0. Default: v0.'
+    default: 'false'
 runs:
   using: "composite"
   steps:
