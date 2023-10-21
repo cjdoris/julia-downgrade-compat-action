@@ -1,27 +1,34 @@
 # julia-downgrade-compat-action
 
-This is a GitHub action for Julia packages which modifies Project.toml so that the oldest
-compatible versions of dependencies are installed.
+**Easy-peasy checking of compat lower bounds in your Julia package.**
 
-This can be used to ensure your tests pass on old versions of packages. If they fail, this
-suggests you need to increase the compat lower bounds.
+This GitHub action does one simple thing: it modifies Project.toml so that that oldest
+compatible versions of dependencies get installed, instead of the newest. When used as part
+of a testing workflow, this can check that your compat lower bounds are correct.
 
-For example, if your Project.toml has this compat entry:
+For example, suppose your Project.toml has this compat entry:
 ```toml
 [compat]
 julia = "1.6"
 Foo = "1.2.3"
 Bar = "0.1.2"
-Baz = "1, 2, 3"
 ```
-then this package will modify it to:
+
+Often these compat entries get forgotten about once set. For instance, suppose the latest
+version of Foo is v1.4.0, and your package now relies on some feature of Foo v1.4 that is
+not present in Foo v1.2. Your package tests will still succeed, because by default we use
+the latest versions of all dependencies.
+
+This action will modify the compat to:
 ```toml
 [compat]
 julia = "1.6"
 Foo = "~1.2.3"
 Bar = "=0.1.2"
-Baz = "~1.0.0"
 ```
+
+Now your package tests will run against Foo v1.2 and fail, highlighting that the compat
+lower bounds are too low - and Foo needs to be increased to `1.4.0`.
 
 ## Usage
 
