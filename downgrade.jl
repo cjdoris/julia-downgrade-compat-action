@@ -10,7 +10,7 @@ function downgrade(file, ignore_pkgs, strict)
             continue
         elseif compat
             # parse the compat line
-            m = match(r"^([A-Za-z0-9]+)( *= *\")([^\"]*)(\".*)", line)
+            m = match(r"^([A-Za-z0-9_]+)( *= *\")([^\"]*)(\".*)", line)
             if m === nothing
                 error("cannot parse compat line: $line")
             end

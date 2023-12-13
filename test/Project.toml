@@ -19,3 +19,6 @@ Pkg9 = "^1.2.3"
 Pkg10 = "~1.2.3"
 Pkg11 = "=1.2.3"
 Pkg12 = "^1, ~2, =3"
+
+# package with underscore
+Pkg13_jll = "1.2.3"
