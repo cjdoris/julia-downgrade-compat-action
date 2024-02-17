@@ -1,5 +1,9 @@
 # julia-downgrade-compat-action
 
+> [!WARNING]
+> This action has moved to https://github.com/julia-actions/julia-downgrade-compat, please
+> update your existing workflows. This repo is now read-only.
+
 **Easy-peasy checking of compat lower bounds in your Julia package.**
 
 Did you set your compat entries a long time ago? Are you sure they are still accurate?
